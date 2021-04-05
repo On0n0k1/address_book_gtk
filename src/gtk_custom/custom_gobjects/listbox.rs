@@ -19,7 +19,7 @@ pub struct CustomListBox{
 
 
 impl CustomListBox{
-    fn new(window: &gtk::ApplicationWindow, scrolled_window: &gtk::ScrolledWindow) -> Self{
+    pub fn new(window: &gtk::Window, viewport: &gtk::Viewport) -> Self{
 
         let model = gio::ListStore::new(RowData::static_type());
         
@@ -41,7 +41,7 @@ impl CustomListBox{
             // change of value in the spin button will be automatically reflected in
             // the item.
             let label = gtk::Label::new(None);
-            item.bind_property("visible_name", &label, "label")
+            item.bind_property("name", &label, "label")
                 .flags(glib::BindingFlags::DEFAULT | glib::BindingFlags::SYNC_CREATE)
                 .build();
             hbox.pack_start(&label, true, true, 0);
@@ -101,7 +101,7 @@ impl CustomListBox{
             box_.upcast::<gtk::Widget>()
         }));
 
-        scrolled_window.add(&listbox);
+        viewport.add(&listbox);
 
         CustomListBox{
             widget: listbox,

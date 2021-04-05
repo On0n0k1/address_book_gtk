@@ -2,6 +2,7 @@ use gio::prelude::*;
 use gtk::prelude::*;
 
 use gtk::ResponseType;
+use glib::value::ToValue;
 
 use std::env::args;
 
@@ -24,8 +25,9 @@ mod imp{
     pub struct RowData{
         address: RefCell<address::Address>,
         email: RefCell<email::Email>,
-        name: RefCell<name::Name>,
-        visible_name: RefCell<Option<String>>,
+        full_name: RefCell<name::Name>,
+        // name: RefCell<Option<String>>,
+        name: RefCell<String>,
         phone: RefCell<phone::Phone>,
     }
 
@@ -34,8 +36,9 @@ mod imp{
             RowData{
                 address: RefCell::new(address::Address::default()),
                 email: RefCell::new(email::Email::default()),
-                name: RefCell::new(name::Name::default()),
-                visible_name: RefCell::new(None),
+                full_name: RefCell::new(name::Name::default()),
+                // name: RefCell::new(Some(String::from("(empty)"))),
+                name: RefCell::new(String::from("(empty)")),
                 phone: RefCell::new(phone::Phone::default()),
             }
         }
@@ -59,8 +62,8 @@ mod imp{
         //     valid_names.contains(&name)
         // }
         pub fn update_name(&self){
-            let new_name = self.name.borrow().get_name();
-            self.visible_name.replace(Some(new_name));
+            let new_name = self.full_name.borrow().get_name();
+            self.name.replace(new_name);
         }
 
         pub fn set_value(&mut self, name: &str, value: String) -> Result<String, String>{
@@ -76,7 +79,7 @@ mod imp{
             if let Ok(result) = self.email.borrow_mut().set_value(name, value.clone()){
                 return Ok(result)
             } else
-            if let Ok(result) = self.name.borrow_mut().set_value(name, value.clone()){
+            if let Ok(result) = self.full_name.borrow_mut().set_value(name, value.clone()){
                 return Ok(result)
             } else
             if let Ok(result) = self.phone.borrow_mut().set_value(name, value.clone()) {
@@ -93,7 +96,7 @@ mod imp{
             if let Ok(result) = self.email.borrow().get_value(name){
                 return Ok(result)
             } else
-            if let Ok(result) = self.name.borrow().get_value(name){
+            if let Ok(result) = self.full_name.borrow().get_value(name){
                 return Ok(result)
             } else
             if let Ok(result) = self.phone.borrow().get_value(name) {
@@ -103,7 +106,7 @@ mod imp{
         }
 
         pub fn get_name(&self) -> Result<String, String> {
-            Ok(self.name.borrow().get_name())
+            Ok(self.full_name.borrow().get_name())
         }
 
 
@@ -111,13 +114,13 @@ mod imp{
 
     // GObject property definitions for our two values
     static PROPERTIES: [subclass::Property; 1] = [
-        subclass::Property("visible_name", |name| {
+        subclass::Property("name", |name| {
             glib::ParamSpec::string(
                 name,
-                "Visible_Name",
-                "Visible_Name",
+                "Name",
+                "Name",
                 None, // Default value
-                glib::ParamFlags::READABLE,
+                glib::ParamFlags::READWRITE,
             )
         }),
         // subclass::Property("count", |name| {
@@ -174,11 +177,14 @@ mod imp{
             let prop = &PROPERTIES[id];
 
             match *prop {
-                subclass::Property("visible_name", ..) => {
+                subclass::Property("name", ..) => {
                     // let visible_name = value
                     //     .get()
                     //     .expect("type conformity checked by `Object::set_property`");
                     self.update_name();
+                    // let new_value= value.get().unwrap();
+                    // let new_value: String = new_value.unwrap();
+                    // self.name.replace(new_value);
                 }
                 // subclass::Property("count", ..) => {
                 //     let count = value
@@ -194,11 +200,21 @@ mod imp{
             let prop = &PROPERTIES[id];
 
             match *prop {
-                subclass::Property("visible_name", ..) => {
+                subclass::Property("name", ..) => {
                     self.update_name();
                     // self.visible_name.replace()
                     // Ok(self.name.borrow().get_name().unwrap().to_value())
-                    Ok(self.visible_name.borrow().clone().to_value())
+                    // match self.name.borrow().clone(){
+                    //     None => {
+                    //         return Ok(String::from("(empty)").to_value());
+                    //     },
+                    //     Some(x) => {
+                    //         return Ok(x.to_value())
+                    //     },
+                    // }
+
+                    return Ok(self.get_name().unwrap().to_value())
+                    // Ok(self.name.borrow().clone().to_value())
                 },
                 // subclass::Property("count", ..) => Ok(self.count.borrow().to_value()),
                 _ => unimplemented!(),
@@ -222,7 +238,7 @@ glib_wrapper! {
 // initial values for our two properties and then returns the new instance
 impl RowData {
     pub fn new(name: &str) -> RowData {
-        glib::Object::new(Self::static_type(), &[("visible_name", &name),])
+        glib::Object::new(Self::static_type(), &[("name", &name),])
             .expect("Failed to create row data")
             .downcast()
             .expect("Created row data is of wrong type")

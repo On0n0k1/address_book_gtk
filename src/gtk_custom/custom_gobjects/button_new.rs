@@ -5,6 +5,7 @@ use gtk::prelude::*;
 use glib::clone;
 
 use crate::fields::client::RowData;
+// use crate::fields::client::imp;
 
 pub struct ButtonNew{
     pub widget: gtk::Button,
@@ -12,7 +13,7 @@ pub struct ButtonNew{
 
 
 impl ButtonNew{
-    fn new_and_connect(gtk_button: gtk::Button, model: &gio::ListStore, listbox: &gtk::ListBox) -> Self{
+    pub fn new_and_connect(gtk_button: gtk::Button, model: &gio::ListStore, listbox: &gtk::ListBox) -> Self{
         gtk_button.connect_clicked(clone!(@weak model, @weak listbox => move |_| {
             // let selected = listbox.get_selected_row();
     

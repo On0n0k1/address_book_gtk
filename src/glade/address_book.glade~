@@ -25,7 +25,7 @@
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <object class="GtkPaned">
+          <object class="GtkPaned" id="paned_for_listbox">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="margin_left">4</property>
@@ -35,7 +35,29 @@
             <property name="hexpand">True</property>
             <property name="wide_handle">True</property>
             <child>
-              <placeholder/>
+              <object class="GtkScrolledWindow">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <property name="shadow_type">in</property>
+                <property name="min_content_width">250</property>
+                <child>
+                  <object class="GtkViewport" id="listbox_viewport">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="resize">False</property>
+                <property name="shrink">False</property>
+              </packing>
             </child>
             <child>
               <object class="GtkBox">
@@ -58,7 +80,7 @@
                     <property name="column_spacing">2</property>
                     <property name="row_homogeneous">True</property>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="address_1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
@@ -74,7 +96,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="address_2">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
@@ -90,7 +112,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="address_city">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
@@ -106,7 +128,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="address_state">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
@@ -122,7 +144,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="address_country">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
@@ -147,8 +169,8 @@
                         <property name="margin_bottom">2</property>
                         <property name="label" translatable="yes">Last Name</property>
                         <property name="justify">right</property>
-                        <property name="width_chars">11</property>
-                        <property name="max_width_chars">11</property>
+                        <property name="width_chars">10</property>
+                        <property name="max_width_chars">10</property>
                         <attributes>
                           <attribute name="font-desc" value="Ubuntu Bold 10"/>
                         </attributes>
@@ -295,9 +317,8 @@
                         <property name="hexpand">True</property>
                         <property name="spacing">2</property>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="name_las">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
                             <property name="valign">center</property>
                             <property name="margin_right">2</property>
@@ -324,7 +345,7 @@
                             <property name="label" translatable="yes">First Name</property>
                             <property name="justify">right</property>
                             <property name="width_chars">10</property>
-                            <property name="max_width_chars">12</property>
+                            <property name="max_width_chars">10</property>
                             <property name="xalign">0.80000001192092896</property>
                             <attributes>
                               <attribute name="font-desc" value="Ubuntu Bold 10"/>
@@ -352,7 +373,7 @@
                         <property name="margin_bottom">2</property>
                         <property name="hexpand">True</property>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="phone">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="valign">center</property>
@@ -380,7 +401,7 @@
                             <property name="label" translatable="yes">Email</property>
                             <property name="justify">right</property>
                             <property name="width_chars">10</property>
-                            <property name="max_width_chars">12</property>
+                            <property name="max_width_chars">10</property>
                             <property name="xalign">0.87999999523162842</property>
                             <attributes>
                               <attribute name="font-desc" value="Ubuntu Bold 10"/>
@@ -422,7 +443,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkEntry">
+                              <object class="GtkEntry" id="name_first">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="valign">center</property>
@@ -448,10 +469,10 @@
                                 <property name="margin_left">2</property>
                                 <property name="margin_top">2</property>
                                 <property name="margin_bottom">2</property>
-                                <property name="label" translatable="yes">Last Name</property>
+                                <property name="label" translatable="yes">Middle Name</property>
                                 <property name="justify">right</property>
-                                <property name="width_chars">11</property>
-                                <property name="max_width_chars">11</property>
+                                <property name="width_chars">12</property>
+                                <property name="max_width_chars">12</property>
                                 <attributes>
                                   <attribute name="font-desc" value="Ubuntu Bold 10"/>
                                 </attributes>
@@ -470,7 +491,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="email">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="valign">center</property>
@@ -547,10 +568,10 @@
                                 <property name="margin_left">2</property>
                                 <property name="margin_top">2</property>
                                 <property name="margin_bottom">2</property>
-                                <property name="label" translatable="yes">Last Name</property>
+                                <property name="label" translatable="yes">ZIP</property>
                                 <property name="justify">right</property>
-                                <property name="width_chars">11</property>
-                                <property name="max_width_chars">11</property>
+                                <property name="width_chars">5</property>
+                                <property name="max_width_chars">5</property>
                                 <attributes>
                                   <attribute name="font-desc" value="Ubuntu Bold 10"/>
                                 </attributes>
@@ -562,7 +583,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkEntry">
+                              <object class="GtkEntry" id="address_zip">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="valign">center</property>
@@ -616,7 +637,7 @@
                         <property name="orientation">vertical</property>
                         <property name="homogeneous">True</property>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="name_middle">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="valign">center</property>
@@ -840,6 +861,11 @@
     <property name="can_focus">False</property>
   </object>
   <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment2">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>

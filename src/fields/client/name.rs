@@ -81,9 +81,16 @@ impl Name{
     }
 
     pub fn get_name(&self) -> String {
-        let mut name = self.get_last_name();
-        name.push_str(", ");
-        name.push_str(&self.get_first_name()[..]);
-        name
+        let first = self.get_first_name();
+        let last = self.get_last_name();
+        if let ("", "") = (&first[..], &last[..]){
+            return String::from("(empty)")
+        }else{
+            let mut name = self.get_last_name();
+            name.push_str(", ");
+            name.push_str(&self.get_first_name()[..]);
+            name
+        }
+        
     }
 }
