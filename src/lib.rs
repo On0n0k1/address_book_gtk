@@ -1,2 +1,3 @@
 pub mod gtk_custom;
-pub mod model;
+pub mod fields;
+pub use fields::client::RowData;

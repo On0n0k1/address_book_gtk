@@ -1,16 +1,11 @@
 mod testing_import{
-    use address_book_gtk::model::client;
+    use address_book_gtk::fields::client;
     use address_book_gtk::gtk_custom;
 
-    #[test]
-    fn import_listbox(){
-        assert_eq!(gtk_custom::listbox::hi(), String::from("Hi from listbox"));
-    }
-
-    #[test]
-    fn import_liststore(){
-        assert_eq!(gtk_custom::liststore::hi(), String::from("Hi from liststore"));
-    }
+    // #[test]
+    // fn import_listbox(){
+    //     assert_eq!(gtk_custom::listbox::hi(), String::from("Hi from listbox"));
+    // }
 
     #[test]
     fn import_address(){

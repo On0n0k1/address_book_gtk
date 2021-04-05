@@ -68,15 +68,22 @@ impl Name{
         }
     }
 
-    pub fn get_first_name(&self) -> String{
+    pub fn get_first_name(&self) -> String {
         self.get_value("first_name").unwrap()
     }
 
-    pub fn get_middle_name(&self) -> String{
+    pub fn get_middle_name(&self) -> String {
         self.get_value("middle_name").unwrap()
     }
 
-    pub fn get_last_name(&self) -> String{
+    pub fn get_last_name(&self) -> String {
         self.get_value("last_name").unwrap()
+    }
+
+    pub fn get_name(&self) -> String {
+        let mut name = self.get_last_name();
+        name.push_str(", ");
+        name.push_str(&self.get_first_name()[..]);
+        name
     }
 }

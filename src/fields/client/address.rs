@@ -60,28 +60,28 @@ impl Address{
         }
     }
 
-    pub fn set_address_1(&mut self, value: String) -> String{
-        self.set_value("address_1", value).unwrap()
+    pub fn set_address_1(&mut self, value: String) -> Result<String, String>{
+        self.set_value("address_1", value)
     }
 
-    pub fn set_address_2(&mut self, value: String) -> String{
-        self.set_value("address_2", value).unwrap()
+    pub fn set_address_2(&mut self, value: String) -> Result<String, String>{
+        self.set_value("address_2", value)
     }
 
-    pub fn set_city(&mut self, value: String) -> String{
-        self.set_value("city", value).unwrap()
+    pub fn set_city(&mut self, value: String) -> Result<String, String>{
+        self.set_value("city", value)
     }
 
-    pub fn set_state(&mut self, value: String) -> String{
-        self.set_value("state", value).unwrap()
+    pub fn set_state(&mut self, value: String) -> Result<String, String>{
+        self.set_value("state", value)
     }
 
-    pub fn set_country(&mut self, value: String) -> String{
-        self.set_value("country", value).unwrap()
+    pub fn set_country(&mut self, value: String) -> Result<String, String>{
+        self.set_value("country", value)
     }
 
-    pub fn set_zip(&mut self, value: String) -> String{
-        self.set_value("zip", value).unwrap()
+    pub fn set_zip(&mut self, value: String) -> Result<String, String>{
+        self.set_value("zip", value)
     }
 
     pub fn get_value(&self, name: &str) -> Result<String, String>{
