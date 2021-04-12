@@ -3,25 +3,107 @@ use gtk::prelude::*;
 
 use gtk::ResponseType;
 use glib::clone;
+use glib::{TypedValue, Value};
 
 use std::env::args;
+use std::cell::RefCell;
+use std::rc::Rc;
+use std::collections::HashMap;
+// use std::cell::RefCell;
 
-use crate::fields::client::RowData;
+// use crate::fields::client::RowData;
+use crate::gtk_custom::custom_gobjects::{
+    rowdata::RowData,
+    entries::Entries,
+};
+
+
 
 pub fn hi() -> String{
     String::from("Hi from listbox")
 }
 
+pub struct Row{
+    pub entries: Entries,
+    // rowdata to append when renewing liststore
+    pub rowdata: RowData,
+}
+
+impl Row{
+    pub fn new(builder: &gtk::Builder, model: &gio::ListStore) -> Self{
+        let rowdata: RowData = RowData::new(&"None");
+        let entries: Entries = Entries::new(builder);
+
+        // append the new row to the main list
+        model.append(&rowdata.clone());
+        Row{
+            rowdata,
+            entries,
+        }
+    }
+
+    pub fn update_name(&self) -> Result<(), String> {
+        let get_name = self.entries.get_name();
+
+        match get_name{
+            Ok(name) => {
+                if let Err(_) = self.rowdata.set_property("name", &name.to_value()) {
+                    return Err(String::from("Something went wrong when setting property"));
+                };
+                return Ok(());
+            },
+            Err(err) => {
+                return Err(err);
+            }
+        }
+
+    }
+
+    pub fn get(&mut self) -> HashMap<String, String> {
+        self.entries.get()
+    }
+
+    pub fn load(&mut self) -> Result<(), String> {
+        self.entries.load()
+    }
+
+    pub fn save(&mut self) -> Result<(), String> {
+        self.entries.save()
+    }
+
+    pub fn clear(&mut self) -> Result<(), String> {
+        self.entries.clear()
+    }
+
+    pub fn is_changed(&self) -> Result<bool, String> {
+        self.entries.is_changed()
+    }
+
+    pub fn is_stored_empty(&self) -> Result<bool, String> {
+        self.entries.is_stored_empty()
+    }
+
+    pub fn is_entry_empty(&self) -> Result<bool, String> {
+        self.entries.is_entry_empty()
+    }
+}
+
 pub struct CustomListBox{
+    pub builder: gtk::Builder,
     pub widget: gtk::ListBox,
     pub model: gio::ListStore,
+    values: std::vec::Vec::<Row>
 }
 
 
 impl CustomListBox{
-    pub fn new(window: &gtk::Window, viewport: &gtk::Viewport) -> Self{
+    pub fn new(builder: gtk::Builder, window: &gtk::Window, viewport: &gtk::Viewport) -> Self{
+
+        // let model = gio::ListStore::new(RowData::static_type());
+        let values: std::vec::Vec::<Row> = std::vec::Vec::new();
 
         let model = gio::ListStore::new(RowData::static_type());
+        println!("Hi\n\n\n");
         
         let listbox = gtk::ListBox::new();
         listbox.bind_model(Some(&model),
@@ -97,19 +179,122 @@ impl CustomListBox{
             // }));
 
             box_.show_all();
-
             box_.upcast::<gtk::Widget>()
         }));
 
         viewport.add(&listbox);
 
+        // let (model, listbox) = (RefCell::new(model), RefCell::new(listbox));
+
         CustomListBox{
+            builder,
             widget: listbox,
             model,
+            values,
         }
     
     }
 
+    fn check_valid_index(&self, idx: u32) -> Result<(), String> {
+        let (len1, len2) = ( 
+            {self.values.len() as u32}, 
+            {self.model.get_n_items() as u32},
+        );
+
+        if (idx > len1) || (idx > len2) {
+            return Err(format!("Index error \n idx: {}\nlen1: {}\nlen2: {}\n ", idx, len1, len2));
+        }
+        Ok(())
+    }
+
+    pub fn update_names(&self) -> Result<(), String>{
+        for rows in &self.values{
+            rows.update_name()?;
+        }
+        Ok(())
+    }
+
+    pub fn button_new(&mut self) -> Result<(), String> {
+        let new_row = Row::new(&self.builder, &self.model);
+        // self.model.append(&new_row.rowdata);
+        self.values.push(new_row);
+        Ok(())
+    }
+
+    pub fn button_delete(&mut self) -> Result<(), String> {
+        let selected = self.widget.get_selected_row();
+    
+        if let Some(selected) = selected {
+            let idx = selected.get_index();
+
+            if (idx as usize > self.values.len()) || (idx as usize > self.model.get_n_items() as usize) {
+                return Err(format!("out of bounds index. idx: {}, values: {}, model: {}\n", 
+                    idx, 
+                    self.values.len(), 
+                    self.model.get_n_items())
+                );
+            }
+
+            self.values.swap_remove(idx as usize);
+            self.model.remove(idx as u32);
+        }
+        Ok(())
+    }
+
+    pub fn button_edit(&mut self) -> Result<(), String>{
+        let selected = self.widget.get_selected_row();
+    
+        if let Some(selected) = selected {
+            let idx = selected.get_index() as usize;
+
+            return self.values[idx].load();
+            // if let Err(err) = self.values[idx].load() {
+            //     eprintln!("{}", err);
+            // }
+        }
+
+        Ok(())
+    }
+
+    pub fn button_save(&mut self) {
+        let selected = self.widget.get_selected_row();
+
+        if let Some(selected) = selected {
+            let idx = selected.get_index() as usize;
+            
+            if let Err(err) = self.values[idx].save() {
+                eprintln!("{}", err);
+            }
+        }
+    }
+
+    pub fn button_cancel(&mut self) {
+        let selected = self.widget.get_selected_row();
+
+        if let Some(selected) = selected {
+            let idx = selected.get_index() as usize;
+            
+            if let Err(err) = self.values[idx].clear() {
+                eprintln!("{}", err);
+            }
+        }
+    }
+
+
+
+
     // search about connect_row_selected
 
+    // pub fn edit(&self) -> Option<RowData>{
+
+    // }
+
+    // pub fn delete(&mut self) -> Result<RowData, String>{
+    //     let selected = self.model.get_selected_row();
+    //     if let Some(selected) = selected{
+    //         let idx = selected.get_index();
+
+    //         self.model.remove(idx);
+    //     }
+    // }
 }

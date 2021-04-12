@@ -4,7 +4,7 @@ extern crate gtk;
 extern crate gio;
 
 mod gtk_custom;
-mod fields;
+// mod fields;
 
 
 use gtk::prelude::*;
@@ -25,13 +25,13 @@ pub fn run3(){
     
     let custom_gobjects = CustomGobjects::new_and_connect(
         &window, 
-        &builder
+        builder
     );
 
 
     window.connect_delete_event(|_, _| { gtk::main_quit(); Inhibit(false) });
     
-    std::mem::drop(builder);
+    // std::mem::drop(builder);
     window.show_all();
 
     gtk::main();
@@ -41,11 +41,11 @@ pub fn run3(){
 
 fn main() {
     run3();
-    println!("{}\n{}\n{}\n{}\n",
-        // gtk_custom::listbox::hi(),
-        fields::client::address::hi(),
-        fields::client::email::hi(),
-        fields::client::name::hi(),
-        fields::client::phone::hi(),
-    );
+    // println!("{}\n{}\n{}\n{}\n",
+    //     // gtk_custom::listbox::hi(),
+    //     // fields::client::address::hi(),
+    //     // fields::client::email::hi(),
+    //     // fields::client::name::hi(),
+    //     // fields::client::phone::hi(),
+    // );
 }
