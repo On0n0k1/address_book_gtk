@@ -82,6 +82,7 @@
                     <child>
                       <object class="GtkEntry" id="address_1">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
                         <property name="margin_right">2</property>
@@ -98,6 +99,7 @@
                     <child>
                       <object class="GtkEntry" id="address_2">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
                         <property name="margin_right">2</property>
@@ -114,6 +116,7 @@
                     <child>
                       <object class="GtkEntry" id="address_city">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
                         <property name="margin_right">2</property>
@@ -130,6 +133,7 @@
                     <child>
                       <object class="GtkEntry" id="address_state">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
                         <property name="margin_right">2</property>
@@ -146,6 +150,7 @@
                     <child>
                       <object class="GtkEntry" id="address_country">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
                         <property name="margin_right">2</property>
@@ -319,6 +324,7 @@
                         <child>
                           <object class="GtkEntry" id="name_last">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
                             <property name="valign">center</property>
                             <property name="margin_right">2</property>
@@ -375,6 +381,7 @@
                         <child>
                           <object class="GtkEntry" id="phone">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
                             <property name="valign">center</property>
                             <property name="margin_right">2</property>
@@ -445,6 +452,7 @@
                             <child>
                               <object class="GtkEntry" id="name_first">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="valign">center</property>
                                 <property name="margin_left">2</property>
@@ -493,6 +501,7 @@
                         <child>
                           <object class="GtkEntry" id="email">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
                             <property name="valign">center</property>
                             <property name="margin_right">2</property>
@@ -585,6 +594,7 @@
                             <child>
                               <object class="GtkEntry" id="address_zip">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="valign">center</property>
                                 <property name="margin_right">2</property>
@@ -639,6 +649,7 @@
                         <child>
                           <object class="GtkEntry" id="name_middle">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
                             <property name="valign">center</property>
                             <property name="margin_right">2</property>

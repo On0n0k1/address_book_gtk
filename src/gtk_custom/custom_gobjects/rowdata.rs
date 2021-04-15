@@ -11,6 +11,7 @@ use glib::subclass::prelude::*;
 use glib::translate::*;
 use glib::{glib_object_impl, glib_wrapper, glib_object_subclass};
 
+
 mod imp{
     use super::*;
     use std::cell::RefCell;
@@ -18,25 +19,6 @@ mod imp{
     pub struct RowData{
         name: RefCell<Option<String>>,
     }
-
-    // impl Default for RowData{
-    //     fn default() -> Self {
-    //         RowData{
-    //             name: RefCell::new(None),
-    //         }
-    //     }
-    // }
-
-    // impl RowData{
-
-    //     pub fn set(&self, new_name: String) -> Result<String, String> {
-    //         Ok(self.name.replace(Some(new_name.clone())).unwrap())
-    //     }
-
-    //     pub fn get(&self) -> String {
-    //         self.name.borrow().clone().unwrap()
-    //     }
-    // }
 
     // GObject property definitions for our two values
     static PROPERTIES: [subclass::Property; 1] = [
@@ -91,17 +73,11 @@ mod imp{
 
             match *prop {
                 subclass::Property("name", ..) => {
-                    // let visible_name = value
-                    //     .get()
-                    //     .expect("type conformity checked by `Object::set_property`");,
                     let name = value
                         .get()
                         .expect("type conformity checked by 'object::set_property'");
-                        // self.set(new_value.unwrap()).unwrap();
+                        
                     self.name.replace(name);
-                    // let new_value= value.get().unwrap();
-                    // let new_value: String = new_value.unwrap();
-                    // self.name.replace(new_value);
                 }
                 _ => unimplemented!(),
             }
@@ -112,9 +88,6 @@ mod imp{
 
             match *prop {
                 subclass::Property("name", ..) => Ok(self.name.borrow().to_value()),
-                    // return Ok(self.get().to_value())
-                    
-                // subclass::Property("count", ..) => Ok(self.count.borrow().to_value()),
                 _ => unimplemented!(),
             }
         }

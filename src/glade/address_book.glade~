@@ -317,7 +317,7 @@
                         <property name="hexpand">True</property>
                         <property name="spacing">2</property>
                         <child>
-                          <object class="GtkEntry" id="name_las">
+                          <object class="GtkEntry" id="name_last">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="valign">center</property>
