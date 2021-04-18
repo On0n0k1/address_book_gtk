@@ -19,7 +19,7 @@ Steps to run:
 
  - Install libgtk-3-dev by running '''sudo apt-get install libgtk-4-dev'''
  
- - Clone this repository with
+ - Clone this repository with '''git clone https://github.com/On0n0k1/address_book_gtk.git'''
  
  - cd to this folder and run '''cargo run'''
  
