@@ -17,7 +17,7 @@ Steps to run:
  
  - (Not sure if required) Install build essentials with '''sudo apt-get install build-essential'''
 
- - Install libgtk-3-dev by running '''sudo apt-get install libgtk-4-dev'''
+ - Install libgtk-3-dev by running '''sudo apt-get install libgtk-3-dev'''
  
  - Clone this repository with '''git clone https://github.com/On0n0k1/address_book_gtk.git'''
  
