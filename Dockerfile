@@ -1,28 +1,18 @@
-# 1: Build the exe
-FROM rust:1.42 as builder
-WORKDIR /usr/src
+FROM ubuntu:focal
 
-# 1a: Prepare for static linking
-RUN apt-get update && \
-    apt-get dist-upgrade -y && \
-    apt-get install -y musl-tools && \
-    rustup target add x86_64-unknown-linux-musl
 
-# 1b: Download and compile Rust dependencies (and store as a separate Docker layer)
-RUN USER=root cargo new myprogram
-WORKDIR /usr/src/myprogram
-COPY Cargo.toml Cargo.lock ./
-RUN cargo install --target x86_64-unknown-linux-musl --path .
+RUN apt-get update && apt-get install -y curl
+RUN apt-get install build-essential -y
 
-RUN apt-get install libgtk-4-dev
+# installing rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 
-# 1c: Build the exe using the actual source code
-COPY src ./src
-RUN cargo install --target x86_64-unknown-linux-musl --path .
+# installing gtk
+RUN apt-get install libgtk-3-dev -y
 
-# 2: Copy the exe and extra files ("static") to an empty Docker image
-FROM scratch
-COPY --from=builder /usr/local/cargo/bin/myprogram .
-COPY static .
-USER 1000
-CMD ["./myprogram"]
+RUN mkdir -p /user/address_book_gtk/
+WORKDIR /user/address_book_gtk/
+COPY . .
+RUN cargo build --release
+CMD ["cargo", "run", "--release"]
