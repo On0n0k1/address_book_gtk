@@ -4,7 +4,7 @@
 
 Address Book implemented in GTK with Rust
 
-Needs to install gtk developer library to test it in ubuntu.
+Need to install gtk development library to test it in ubuntu.
 
 Name of library is libgtk-3-dev. Can be installed with "sudo apt-get install libgtk-3-dev".
 As shown in the link https://www.gtk.org/docs/installations/linux/
@@ -18,7 +18,7 @@ Steps to run:
 
  - Install rust by running '''curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh''' Source: https://www.rust-lang.org/tools/install
  
- - (Not sure if required) Install build essentials with '''sudo apt-get install build-essential'''
+ - (Not sure if required) Install build essential through '''sudo apt-get install build-essential'''
 
  - Install libgtk-3-dev by running '''sudo apt-get install libgtk-3-dev'''
  
