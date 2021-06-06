@@ -1,4 +1,7 @@
 # address_book_gtk
+
+![address_book_gtk](https://github.com/On0n0k1/address_book_gtk/blob/main/static/address_book_gtk.png)
+
 Address Book implemented in GTK with Rust
 
 Needs to install gtk developer library to test it in ubuntu.
